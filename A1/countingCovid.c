@@ -5,27 +5,48 @@
 int find_char(const char *str, const char chr, const int occurrence);
 
 int main()
-{
-    FILE* file = fopen("covidData_100.csv", "r");
+{    
     char line[256];
     
-    if (file != NULL)
+    // discard first line
+    fgets(line, sizeof(line), stdin);
+    
+    char date[11] = "";
+    char prev_date[11] = "";
+    int start = 0;
+    int count = 0;
+
+    while (fgets(line, sizeof(line), stdin))
     {
-        fgets(line, sizeof(line), file);
-
-        char date[10] = "";
-        // char last_date[10] = "";
-        while (fgets(line, sizeof(line), file))
+        // line starts with quote -- date starts after second quote
+        if (line[0] == '"')
         {
-            int start = find_char(line, ',', 2) + 1;
-            strncpy(date, line, 10);
-
-            printf("%s\n", date);
-
-            // char last_date[10] = date;
+            start = find_char(line, '"', 2) + 2;
         }
-    }
+        // line doesn't start with quote -- date starts after first comma
+        else
+        {
+            start = find_char(line, ',', 1) + 1;
+        }
+        // store date in variable
+        strncpy(date, line + start, 10);
 
+        // date is different from prev_date -- print previous date and count, reset counter
+        if (strncmp(date, prev_date, 10) != 0 && strncmp(prev_date, "", 1) != 0)
+        {
+            printf("%s: %d\n", prev_date, count);
+            count = 1;
+        }
+        // date is same as prev_date -- increment counter
+        else
+        {
+            count++;
+        }
+
+        // copy date to prev_date
+        strncpy(prev_date, date, 10);
+    }
+    printf("%s: %d\n", prev_date, count);
     return 0;
 }
 
