@@ -1,8 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/*--------------------------------------
+Student's Name: Salem Stockdale
+Assignment 1
+Lab Section: X03L
+Lab Instructor's Name: Salwa Abougamila
+Lecture Instructor's Name: Ardy RD
+--------------------------------------*/
 
-int find_char(const char *str, const char chr, const int occurrence);
+#include <stdio.h>
+#include <string.h>
+#include "countingCovid.h"
 
 int main()
 {    
