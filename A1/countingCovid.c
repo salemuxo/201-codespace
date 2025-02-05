@@ -59,7 +59,7 @@ int main()
 int find_char(const char *str, const char chr, const int occurrence)
 {
     int occurrences = 0;
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < strlen(str); i++)
     {
         if (str[i] == chr)
         {
