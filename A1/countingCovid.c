@@ -16,7 +16,7 @@ int main()
     
     // discard first line
     fgets(line, sizeof(line), stdin);
-    
+
     char date[11] = "";
     char prev_date[11] = "";
     int start = 0;
@@ -34,6 +34,7 @@ int main()
         {
             start = find_char(line, ',', 1) + 1;
         }
+        
         // store date in variable
         strncpy(date, line + start, 10);
 
