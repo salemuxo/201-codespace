@@ -6,6 +6,8 @@ Lab Instructor's Name: Salwa Abougamila
 Lecture Instructor's Name: Ardy RD
 --------------------------------------*/
 
+#include <stdio.h>
+
 int idigits(int num)
 {
     if (num >= 1000) return 4;

@@ -6,6 +6,8 @@ Lab Instructor's Name: Salwa Abougamila
 Lecture Instructor's Name: Ardy RD
 --------------------------------------*/
 
+#include <string.h>
+
 int find_char(const char *str, const char chr, const int occurrence)
 {
     int occurrences = 0;

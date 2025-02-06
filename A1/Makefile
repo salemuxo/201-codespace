@@ -18,14 +18,26 @@ all: cardinalSort countingCovid squeeze xTable
 cardinalSort: cardinalSort.c 
 	$(CC) $(CFLAGS) cardinalSort.c -o cardinalSort
 
-countingCovid: countingCovid.c
-	$(CC) $(CFLAGS) countingCovid.c -o countingCovid
+countingCovid: countingCovid.o countingCovidHelpers.o
+	$(CC) $(CFLAGS) -o countingCovid countingCovid.o countingCovidHelpers.o
+
+countingCovid.o: countingCovid.c countingCovidHelpers.o
+	$(CC) $(CFLAGS) -c countingCovid.c
+
+countingCovidHelpers.o: countingCovidHelpers.c
+	$(CC) $(CFLAGS) -c countingCovidHelpers.c
 
 squeeze: squeeze.c
 	$(CC) $(CFLAGS) squeeze.c -o squeeze
 
-xTable: xTable.c
-	$(CC) $(CFLAGS) xTable.c -o xTable $(LDFLAGS)
+xTable: xTable.o xTableHelpers.o
+	$(CC) $(CFLAGS) -o xTable xTable.o xTableHelpers.o $(LDFLAGS)
+
+xTable.o: xTable.c xTableHelpers.o
+	$(CC) $(CFLAGS) -c xTable.c
+
+xTableHelpers.o: xTableHelpers.c 
+	$(CC) $(CFLAGS) -c xTableHelpers.c
 
 # testing rules
 
@@ -43,12 +55,12 @@ testSqueeze: squeeze
 
 testXTable: xTable
 	./xTable > testing/testXTableOut.txt
-	diff testing/testXTableOut.txt testing/correctXTable
+	diff testing/testXTableOut.txt testing/correctXTable.txt
 
 # other rules
 
 clean:
-	rm cardinalSort countingCovid squeeze xTable testing/testCardinalSortOut.txt testing/testCountingCovidOut.txt testing/testSqueezeOut.txt testing/testXTableOut.txt
+	rm *.o cardinalSort countingCovid squeeze xTable testing/testCardinalSortOut.txt testing/testCountingCovidOut.txt testing/testSqueezeOut.txt testing/testXTableOut.txt
 
 tar:
 	tar -zcvf cmpt201_a1_SS.tar.gz Makefile countingCovid.c squeeze.c
