@@ -8,7 +8,7 @@ Lecture Instructor's Name: Ardy RD
 
 #include <stdio.h>
 #include <string.h>
-#include "countingCovid.h"
+#include "countingCovidHelpers.h"
 
 int main()
 {    
@@ -55,26 +55,4 @@ int main()
     }
     printf("%s: %d\n", prev_date, count);
     return 0;
-}
-
-int find_char(const char *str, const char chr, const int occurrence)
-{
-    int occurrences = 0;
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (str[i] == chr)
-        {
-            occurrences++;
-            if (occurrences >= occurrence)
-            {
-                return i;
-            }
-        }
-        else if (str[i] == '\0')
-        {
-            return -1;
-        }
-        
-    }
-    return -1;
 }
