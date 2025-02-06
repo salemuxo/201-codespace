@@ -43,6 +43,7 @@ testSqueeze: squeeze
 
 testXTable: xTable
 	./xTable > testing/testXTableOut.txt
+	diff testing/testXTableOut.txt testing/correctXTable
 
 # other rules
 
