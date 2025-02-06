@@ -1,3 +1,12 @@
+# /*--------------------------------------
+# Student's Name: Salem Stockdale
+# Assignment 1
+# Lab Section: X03L
+# Lab Instructor's Name: Salwa Abougamila
+# Lecture Instructor's Name: Ardy RD
+# --------------------------------------*/
+
+
 CC=gcc
 CFLAGS=-Wall -std=c99
 LDFLAGS=-lm
@@ -16,7 +25,7 @@ squeeze: squeeze.c
 	$(CC) $(CFLAGS) squeeze.c -o squeeze
 
 xTable: xTable.c
-	$(CC) $(CFLAGS) xTable.c -o xTable
+	$(CC) $(CFLAGS) xTable.c -o xTable $(LDFLAGS)
 
 # testing rules
 
@@ -33,7 +42,7 @@ testSqueeze: squeeze
 	./squeeze < testing/testSqueezeIn.txt > testing/testSqueezeOut.txt
 
 testXTable: xTable
-	./xTable < testing/testXTableIn.txt > testing/testXTableOut.txt
+	./xTable > testing/testXTableOut.txt
 
 # other rules
 
