@@ -20,7 +20,7 @@ cardinalSort: cardinalSort.c
 
 countingCovid: countingCovid.c
 	$(CC) $(CFLAGS) -o countingCovid countingCovid.c
-	
+
 squeeze: squeeze.c
 	$(CC) $(CFLAGS) squeeze.c -o squeeze
 
@@ -55,7 +55,7 @@ testXTable: xTable
 # other rules
 
 clean:
-	rm *.o cardinalSort countingCovid squeeze xTable testing/testCardinalSortOut.txt testing/testCountingCovidOut.txt testing/testSqueezeOut.txt testing/testXTableOut.txt
+	rm *.o cardinalSort countingCovid squeeze xTable testing/test*Out.txt
 
 tar:
 	tar -zcvf cmpt201_a1_SS.tar.gz Makefile cardinalSort.c countingCovid.c squeeze.c xTable.c xTableHelpers.c xTableHelpers.h testing
