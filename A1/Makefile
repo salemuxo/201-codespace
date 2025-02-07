@@ -52,6 +52,7 @@ testCountingCovid: countingCovid
 
 testSqueeze: squeeze
 	./squeeze < testing/testSqueezeIn.txt > testing/testSqueezeOut.txt
+	diff testing/testSqueezeOut.txt testing/correctSqueeze.txt
 
 testXTable: xTable
 	./xTable > testing/testXTableOut.txt
