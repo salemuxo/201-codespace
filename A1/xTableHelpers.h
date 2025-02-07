@@ -32,9 +32,33 @@ int ddigits(double num);
 Prints the given number of spaces to the console.
 
 Input:
-    double n: the number of spaces to print.
+    int n: the number of spaces to print.
 
 Output:
     No return value, but prints n spaces to the console.
 */
-void nspaces(double n);
+void nspaces(int n);
+
+/*
+Prints an integer with enough spaces to fill total_space.
+
+Input:
+    int num: the number to print
+    int total_space: the total width to space out to
+
+Output:
+    No return value, but prints number and spaces to console.
+*/
+void space_int(int num, int total_space);
+
+/*
+Prints a double to 1 decimal place with enough spaces to fill total_space.
+
+Input:
+    double num: the number to print
+    int total_space: the total width to space out to
+
+Output:
+    No return value, but prints number and spaces to console.
+*/
+void space_double(double num, int total_space);

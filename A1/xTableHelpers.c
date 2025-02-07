@@ -26,11 +26,25 @@ int ddigits(double num)
     else return 3;
 }
 
-void nspaces(double n)
+void nspaces(int n)
 {
     for (int i = 0; i < n; i++)
     {
         printf(" ");
     }
+    return;
+}
+
+void space_int(int num, int total_space)
+{
+    printf("%d", num);
+    nspaces(total_space - idigits(num));
+    return;
+}
+
+void space_double(double num, int total_space)
+{
+    printf("%.1lf", num);
+    nspaces(total_space - ddigits(num));
     return;
 }

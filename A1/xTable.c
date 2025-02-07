@@ -31,22 +31,20 @@ int main()
     printf("+         ");
     for (int x = 5; x <= 100; x += 5)
     {
-        printf("%d", x);
-        nspaces(10 - idigits(x));
+        space_int(x, 10);
     }
     printf("\n");
-
+    
+    // for remaining rows, print y value then next 20 vals
     for (int y = 5; y <= 100; y += 5)
     {
-        printf("%d", y);
-        nspaces(10 - idigits(y));
+        space_int(y, 10);
 
         // print the next 20 values in the array
         int start = (y / 5 - 1) * 20;
         for (int n = start; n < start + 20; n++)
         {
-            printf("%.1lf", vals[n]);
-            nspaces(10 - ddigits(vals[n]));
+            space_double(vals[n], 10);
         }
         printf("\n");
     }

@@ -8,7 +8,6 @@ Lecture Instructor's Name: Ardy RD
 
 #include <stdio.h>
 #include <string.h>
-#include "countingCovidHelpers.h"
 
 int main()
 {    
@@ -17,26 +16,15 @@ int main()
     // discard first line
     fgets(line, sizeof(line), stdin);
 
-    char date[11] = "";
-    char prev_date[11] = "";
-    int start = 0;
+    char date[11] = "", prev_date[11] = "";
     int count = 0;
 
-    while (fgets(line, sizeof(line), stdin))
+    while (fgets(line, sizeof(line), stdin) != NULL)
     {
-        // line starts with quote -- date starts after second quote
-        if (line[0] == '"')
-        {
-            start = find_char(line, '"', 2) + 2;
-        }
-        // line doesn't start with quote -- date starts after first comma
-        else
-        {
-            start = find_char(line, ',', 1) + 1;
-        }
+        char *start = strchr(line, '/') - 4;
         
         // store date in variable
-        strncpy(date, line + start, 10);
+        strncpy(date, start, 10);
 
         // date is different from prev_date -- print previous date and count, reset counter
         if (strncmp(date, prev_date, 10) != 0 && strncmp(prev_date, "", 1) != 0)

@@ -16,17 +16,11 @@ LDFLAGS=-lm
 all: cardinalSort countingCovid squeeze xTable
 
 cardinalSort: cardinalSort.c 
-	$(CC) $(CFLAGS) cardinalSort.c -o cardinalSort
+	$(CC) $(CFLAGS) -o cardinalSort cardinalSort.c 
 
-countingCovid: countingCovid.o countingCovidHelpers.o
-	$(CC) $(CFLAGS) -o countingCovid countingCovid.o countingCovidHelpers.o
-
-countingCovid.o: countingCovid.c countingCovidHelpers.o
-	$(CC) $(CFLAGS) -c countingCovid.c
-
-countingCovidHelpers.o: countingCovidHelpers.c
-	$(CC) $(CFLAGS) -c countingCovidHelpers.c
-
+countingCovid: countingCovid.c
+	$(CC) $(CFLAGS) -o countingCovid countingCovid.c
+	
 squeeze: squeeze.c
 	$(CC) $(CFLAGS) squeeze.c -o squeeze
 
@@ -64,4 +58,4 @@ clean:
 	rm *.o cardinalSort countingCovid squeeze xTable testing/testCardinalSortOut.txt testing/testCountingCovidOut.txt testing/testSqueezeOut.txt testing/testXTableOut.txt
 
 tar:
-	tar -zcvf cmpt201_a1_SS.tar.gz Makefile countingCovid.c squeeze.c
+	tar -zcvf cmpt201_a1_SS.tar.gz Makefile cardinalSort.c countingCovid.c squeeze.c xTable.c xTableHelpers.c xTableHelpers.h testing
