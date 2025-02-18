@@ -1,0 +1,4 @@
+- For CardinalSort, the python program uses the sorted function to sort the string by the ascii value. 
+- For CountingCovid, the python program uses csv.reader to read the csv file and collections.Counter to count the repeat dates.
+- For Squeeze, the python program uses itertools.groupby to group the string by characters, then counts the repeats.
+- For xTable, the correctXTable.txt file contains the correctly formatted xTable.
