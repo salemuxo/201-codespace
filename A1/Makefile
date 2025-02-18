@@ -39,6 +39,8 @@ testing: testCardinalSort testCountingCovid testSqueeze testXTable
 
 testCardinalSort: cardinalSort
 	./cardinalSort < testing/testCardinalSortIn.txt > testing/testCardinalSortOut.txt
+	python testing/testCardinalSort.py 
+	diff testing/testCardinalSortOut.txt testing/correctCardinalSort.txt
 
 testCountingCovid: countingCovid
 	./countingCovid < testing/covidData.csv > testing/testCountingCovidOut.txt
@@ -55,7 +57,7 @@ testXTable: xTable
 # other rules
 
 clean:
-	rm *.o cardinalSort countingCovid squeeze xTable testing/test*Out.txt
+	rm *.o cardinalSort countingCovid squeeze xTable testing/test*Out.txt testing/correctCardinalSort.txt
 
 tar:
 	tar -zcvf cmpt201_a1_SS.tar.gz Makefile cardinalSort.c countingCovid.c squeeze.c xTable.c xTableHelpers.c xTableHelpers.h testing
