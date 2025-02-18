@@ -32,6 +32,7 @@ void CardinalSort(char *input)
 
     for (int i = 0; i < strlen(input); i++)
     {
+        // if ascii value is within boundaries, iterate counter
         if ((int)input[i] >= min && (int)input[i] <= max)
         {
             counts[(int)input[i] - min]++;
@@ -40,6 +41,7 @@ void CardinalSort(char *input)
 
     for (int i = 0; i < 95; i++)
     {
+        // print the character repeated by the counter value
         for (int c = 0; c < counts[i]; c++)
         {
             printf("%c", (char)i + min);
