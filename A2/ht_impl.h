@@ -13,18 +13,44 @@
  */
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdint.h>
 #ifndef _HT_IMPL_H_
 #define _HT_IMPL_H_
 
 /* TODO: think of some things that should go in here! */
 
-typedef struct {
-    char* key;
-    char* value;
-} node;
+// hashtable stuff
 
-long long unsigned hash(const char *s, const int table_size);
+struct ht {
+    struct node** array;
+    int capacity;
+    int size;
+};
+
+double ht_load(struct ht* table);
+
+void ht_resize(struct ht* ht);
+
+int ht_find_key(const struct ht* ht, const char* key);
+
+// node stuff
+
+struct node {
+    char* key;
+    void* value;
+};
+
+struct node* node_create(const char* key, void* value);
+
+void node_free(struct node* node);
+
+// other stuff
+
+uint64_t hash(const char *s);
 
 bool is_prime(int num);
+
+int next_prime(const int num);
 
 #endif

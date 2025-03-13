@@ -10,5 +10,12 @@ int main()
             printf("%d, ", i);
         }
     }
+
+    printf("\n");
+    
+    for (int i = 0; i < 100; i += 10)
+    {
+        printf("%d, ", next_prime(i));
+    }
     return 0;
 }

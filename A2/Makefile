@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -std=c99
+CFLAGS=-Wall -std=c99 -g
 
 all: pcode
 
@@ -12,19 +12,23 @@ ht.o: ht.c
 ht_impl.o: ht_impl.c
 	$(CC) $(CFLAGS) -c ht_impl.c
 
-testing: testPrime testNode
+# TESTING RULES
 
-compileTests:
+testing: compileTests testPrime testNode
 
-testPrime: testing/testPrime.c ht_impl.o
+compileTests: ht_impl.o
 	$(CC) $(CFLAGS) -o testing/testPrime testing/testPrime.c ht_impl.o
+	$(CC) $(CFLAGS) -o testing/testNode testing/testNode.c ht_impl.o 
+
+testPrime: compileTests testing/testPrime.c ht_impl.o
 	./testing/testPrime > testing/testPrimeOut
 	diff testing/testPrimeOut testing/correctPrime
 
-testNode: testing/testNode.c ht_impl.o
-	$(CC) $(CFLAGS) -o testing/testNode testing/testNode.c ht_impl.o 
+testNode: compileTests testing/testNode.c ht_impl.o
 	./testing/testNode > testing/testNodeOut
-	diff
+	diff testing/testNodeOut testing/correctNode
+
+# GENERAL RULES
 
 clean:
-	rm *.o pcode testing/*Out testing/testPrime
+	rm *.o pcode testing/*Out testing/testPrime testing/testNode

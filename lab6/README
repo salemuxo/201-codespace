@@ -1,0 +1,17 @@
+1. 
+    a) Error in function createList at line 19. 
+    b) Using break createList revealed that an error occurred when copying the data to the node.
+    c) The error was caused by the fact that the memory was not allocated for node->data.
+    d) I fixed the error by adding a malloc call to allocate the memory before copying the data.
+
+2.
+    a) Error in function deleteNode at line 46.
+    b) Using break deleteNode revealed that an error occurred when comparing the element to the node's data.
+    c) The error was caused by the fact that the cur pointer wasn't initialized.
+    d) I fixed it by initializing cur* to the list.
+
+3.
+    a) Error in function destroy at line 68.
+    b) Using break destroy revealed that an error occurred when setting dest to link.
+    c) The error was caused by the fact that link was not initialized before the node was freed.
+    d) I fixed it by initializing the link at the start of the loop.

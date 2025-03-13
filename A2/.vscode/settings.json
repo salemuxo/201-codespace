@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "ht_impl.h": "c"
+        "ht_impl.h": "c",
+        "stdbool.h": "c",
+        "stdlib.h": "c",
+        "ht.h": "c"
     }
 }

@@ -12,3 +12,6 @@ link.o: link.c
 
 clean:
 	rm *.o lab6E1
+
+tar:
+	tar -zcvf cmpt201_lab_6_SS.tar.gz link.? lab6E1.c README Makefile
