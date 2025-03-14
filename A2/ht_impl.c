@@ -9,25 +9,30 @@
 
 double ht_load(struct ht* ht)
 {
+    // load factor is size / capacity
     return (double)ht->size / (double)ht->capacity;
 }
 
 void ht_resize(struct ht* ht)
 {
+    // new capacity is next prime after current capacity * scale factor
     int new_capacity = next_prime(ht->capacity * SCALE_FACTOR);
-    struct node** new_array = malloc(new_capacity * sizeof(struct node*));
+
+    // allocate new array of pointers to entries
+    struct entry** new_array = malloc(new_capacity * sizeof(struct entry*));
     if (new_array == NULL)
     {
         return;
     }
 
+    // initialize each entry to NULL
     for (int i = 0; i < new_capacity; i++)
     {
         new_array[i] = NULL;
     }
 
-
-    struct node* entries[ht->size];
+    // store all entries in a temporary array
+    struct entry* entries[ht->size];
     int entry = 0;
 
     for (int i = 0; i < ht->capacity; i++)
@@ -38,15 +43,18 @@ void ht_resize(struct ht* ht)
         }
     }
 
+    // free old array and update hashtable fields
     free(ht->array);
     ht->array = new_array;
     ht->capacity = new_capacity;
     ht->size = 0;
 
+    // reinsert all entries
     for (int i = 0; i < entry; i++)
     {
-        struct node* node = entries[i];
-        ht_insert(ht, node->key, node->value);
+        struct entry* entry = entries[i];
+        ht_insert(ht, entry->key, entry->value);
+        entry_free(entry);
     }
 }
 
@@ -70,11 +78,11 @@ int ht_find_key(const struct ht* ht, const char* key)
     return -1;
 }
 
-struct node* node_create(const char* key, void* value)
+struct entry* entry_create(const char* key, void* value)
 {
-    struct node* create;
+    struct entry* create;
 
-    create = malloc(sizeof(struct node));
+    create = malloc(sizeof(struct entry));
     if (create == NULL)
     {
         return NULL;
@@ -93,28 +101,16 @@ struct node* node_create(const char* key, void* value)
     return create;
 }
 
-void node_free(struct node* node)
+void entry_free(struct entry* entry)
 {
-    if (node == NULL)
+    if (entry == NULL)
     {
         return;
     }
 
-    free(node->key);
-    free(node);
+    free(entry->key);
+    free(entry);
 }
-
-// void node_delete(struct node* node)
-// {
-//     node_free(node);
-
-//     struct node* deleted;
-
-//     deleted = malloc(sizeof(struct node));
-//     deleted->deleted = true;
-
-//     node = deleted;
-// }
 
 uint64_t hash(const char *s)
 {

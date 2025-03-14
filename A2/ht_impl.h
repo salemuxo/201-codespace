@@ -22,8 +22,15 @@
 
 // hashtable stuff
 
+/*
+Struct to represent a hash table
+
+Fields:
+    struct entry** array: pointer to an array of pointers to entries
+    int capacity: the total number of 
+*/
 struct ht {
-    struct node** array;
+    struct entry** array;
     int capacity;
     int size;
 };
@@ -34,16 +41,16 @@ void ht_resize(struct ht* ht);
 
 int ht_find_key(const struct ht* ht, const char* key);
 
-// node stuff
+// entry stuff
 
-struct node {
+struct entry {
     char* key;
     void* value;
 };
 
-struct node* node_create(const char* key, void* value);
+struct entry* entry_create(const char* key, void* value);
 
-void node_free(struct node* node);
+void entry_free(struct entry* entry);
 
 // other stuff
 

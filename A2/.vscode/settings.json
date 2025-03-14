@@ -4,6 +4,7 @@
         "ht_impl.h": "c",
         "stdbool.h": "c",
         "stdlib.h": "c",
-        "ht.h": "c"
+        "ht.h": "c",
+        "string.h": "c"
     }
 }
