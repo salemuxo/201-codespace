@@ -39,7 +39,7 @@ Parameters:
     struct ht* table: the hash table to calculate the load factor of
 Returns: double - the load factor of the hash table
 */
-double ht_load(struct ht* table);
+double ht_load(const struct ht* table);
 
 /*
 Purpose: Resizes the hash table to the next prime number after the current capacity * SCALE_FACTOR.
@@ -63,7 +63,7 @@ Struct to represent a single entry in a hash table.
 
 Fields:
     char* key: the key to lookup the entry in the table
-    void* value: the value associated with the key 
+    char* value: the value associated with the key 
     bool deleted: whether the entry has been deleted
 */
 struct entry {
@@ -76,11 +76,11 @@ struct entry {
 Purpose: Creates a new entry with the given key and value.
 Parameters:
     const char* key: the key to associate with the entry
-    void* value: the value to associate with the entry
+    const char* value: the value to associate with the entry
 Returns:
     struct entry* - a pointer to the newly created entry
 */
-struct entry* entry_create(const char* key, char* value);
+struct entry* entry_create(const char* key, const char* value);
 
 /*
 Purpose: Frees the memory associated with an entry.

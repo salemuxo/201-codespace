@@ -137,7 +137,7 @@ void ht_print_dist(const hashtable ht)
         }
         else
         {
-            count = strlen(ht->array[i]->value);
+            count = sizeof(ht->array[i]->value);
         }
 
         printf("%d ", count);

@@ -1,0 +1,53 @@
+1. Unit Tests
+
+1.1 Entry Tests 
+    - Test File: testing/testEntry.c 
+    - Description: Verifies the creation and freeing of entry objects.
+    - Test Cases:
+        - Create entries with different keys and values
+        - Print the key and value of each entry
+        - Free the entries and ensure no memory leaks
+
+1.2 Prime Tests
+    - Test File: testing/testPrime.c
+    - Description: Verifies the correctness of prime number utilities.
+    - Test Cases:
+        - Test the isPrime function for numbers 0 to 100
+        - Find the next prime number for multiples of 10 from 0 to 100
+
+2. Integration Tests
+
+2.1 Insertion and Deletion Tests
+    - Test File: testing/testInsertDelete.c
+    - Description: Verifies the insertion, deletion, and lookup of entries in the hash table, as well as resizing and freeing.
+    - Test Cases:
+        - Insert entries with different keys and values, verifying size and load factor
+        - Retrieve entries by key and verify the values
+        - Delete entries by key and verify they are removed from the table, verifying size and load factor
+        - Reinsert entries with the same keys and verify the values are updated, verifying size and load factor
+
+2.2 Distribution Tests
+    - Test File: testing/testDistribution.c
+    - Description: Verifies the distribution of entries in the hash table.
+    - Test Cases:
+        - Insert a entries with different keys and values
+        - Verify the distribution of entries across buckets
+
+3. Functional Tests
+
+3.1 Postal Code Lookup
+    - Test File: pcode.c
+    - Description: Verifies the functionality of the hashtable in a postal code lookup application.
+    - Test Cases:
+        - Read city and postal code pairs from input table
+        - Insert city and postal code pairs into hashtable
+        - Handle duplicate city entries by appending postal codes
+        - Allow user to query postal codes for cities
+
+Test Execution
+
+1. Compile and run the tests using provided Makefile:
+    1. make testing
+    2. make valgrindPcode
+
+2. Review the output of the tests to ensure all test cases pass and there are no memory leaks.

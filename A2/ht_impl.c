@@ -7,7 +7,7 @@
 #include <stddef.h>
 #define SCALE_FACTOR 1.5
 
-double ht_load(struct ht* ht)
+double ht_load(const struct ht* ht)
 {
     // load factor is size / capacity
     return (double)ht->size / (double)ht->capacity;
@@ -82,7 +82,7 @@ int ht_find_key(const struct ht* ht, const char* key)
     return -1;
 }
 
-struct entry* entry_create(const char* key, char* value)
+struct entry* entry_create(const char* key, const char* value)
 {
     struct entry* create;
 
@@ -102,7 +102,6 @@ struct entry* entry_create(const char* key, char* value)
     }
     strcpy(create->key, key);
 
-    // allocate memory for value and copy to entry
     create->value = malloc(strlen(value) + 1);
     if (create->value == NULL)
     {
