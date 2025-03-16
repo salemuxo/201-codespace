@@ -12,6 +12,7 @@
 #include "ht_impl.h" /* Also import the private header, just for us! */
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 
 #define MAX_LOAD 2.0 / 3.0
 
@@ -51,15 +52,17 @@ void ht_free(hashtable ht)
     // free each entry in array
     for (int i = 0; i < ht->capacity; i++)
     {
-        entry_free(ht->array[i]);
+        if (ht->array[i] != NULL)
+        {
+            entry_free(ht->array[i]);
+        }
     }
-
     // free array and hashtable itself
     free(ht->array);
     free(ht);
 }
 
-void ht_insert(hashtable ht, char *key, void *value)
+void ht_insert(hashtable ht, char *key, char *value)
 {
     // create the entry to insert
     struct entry* insert = entry_create(key, value);
@@ -78,6 +81,13 @@ void ht_insert(hashtable ht, char *key, void *value)
             ht->size++;
             break;
         }
+        if (ht->array[index]->deleted)
+        {
+            free(ht->array[index]);
+            ht->array[index] = insert;
+            ht->size++;
+            break;
+        }
     }
     
     // if load exceeded max, resize
@@ -87,56 +97,52 @@ void ht_insert(hashtable ht, char *key, void *value)
     }
 }
 
-void *ht_lookup(const hashtable ht, const char *key)
+char *ht_lookup(const hashtable ht, const char *key)
 {
+    // find index of key, return NULL if key not found
     int index = ht_find_key(ht, key);
     if (index == -1)
     {
         return NULL;
     }
 
+    // return value associated with entry at index
     return ht->array[index]->value;
 }
 
 void ht_remove(hashtable ht, const char *key)
 {
+    // find index of key, return NULL if key not found
     int index = ht_find_key(ht, key);
     if (index == -1)
     {
         return;
     }
 
-    // free the entry that was at index
-    entry_free(ht->array[index]);
-    ht->array[index] = NULL;
+    // delete entry at index
+    entry_delete(ht->array[index]);
+
+    // decrement size
     ht->size--;
-
-    for (int i = 1; i < ht->capacity; i++)
-    {
-        // loop through following entries
-        int current = (index + i) % ht->capacity;
-
-        // if next entry is not null, remove and reinsert
-        if (ht->array[current] != NULL)
-        {
-            struct entry* entry = ht->array[current];
-            ht->array[current] = NULL;
-            ht->size--;
-
-            ht_insert(ht, entry->key, entry->value);
-            continue;
-        }
-        // if next entry is null, return
-        else 
-        {
-            return;
-        }
-    }
 }
 
 void ht_print_dist(const hashtable ht)
 {
-    return;
+    for (int i = 0; i < ht->capacity; i++)
+    {
+        int count;
+        if (ht->array[i] == NULL)
+        {
+            count = 0;
+        }
+        else
+        {
+            count = strlen(ht->array[i]->value);
+        }
+
+        printf("%d ", count);
+    }
+    printf("\n");
 }
 
 void ht_foreach(const hashtable ht, ht_iter f)

@@ -42,7 +42,7 @@ typedef struct ht* hashtable;
  * and a value of arbitrary type.  We will make use of this type in
  * `ht_foreach()`.
  */
-typedef void (*ht_iter)(char *key, void *value);
+typedef void (*ht_iter)(char *key, char *value);
 
 
 /******************************** Functions ***********************************/
@@ -82,7 +82,7 @@ void ht_free(hashtable ht);
  * happens when the hash table has gotten "too full" for the number of elements
  * in the table, and the table must be resized.
  */
-void ht_insert(hashtable ht, char *key, void *value);
+void ht_insert(hashtable ht, char *key, char *value);
 
 
 /* Finds the value associated with a given key.  Returns NULL if no such
@@ -91,7 +91,7 @@ void ht_insert(hashtable ht, char *key, void *value);
  *
  * Lookup needs to be O(1) in the number of elements in the hashtable.
  */
-void *ht_lookup(const hashtable ht, const char *key);
+char *ht_lookup(const hashtable ht, const char *key);
 
 
 /* Removes the given key from the hashtable.

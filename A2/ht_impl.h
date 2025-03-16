@@ -20,8 +20,6 @@
 
 /* TODO: think of some things that should go in here! */
 
-// hashtable stuff
-
 /*
 Struct to represent a hash table
 
@@ -35,29 +33,93 @@ struct ht {
     int size;
 };
 
+/*
+Purpose: Calculates the load factor of a hash table (size / capacity)
+Parameters:
+    struct ht* table: the hash table to calculate the load factor of
+Returns: double - the load factor of the hash table
+*/
 double ht_load(struct ht* table);
 
+/*
+Purpose: Resizes the hash table to the next prime number after the current capacity * SCALE_FACTOR.
+Parameters:
+    struct ht* table: the hash table to resize
+Returns: Nothing, but resizes the hash table.
+*/
 void ht_resize(struct ht* ht);
 
+/*
+Purpose: Finds the index of a key in a hash table.
+Parameters:
+    const struct ht* ht: the hash table to search
+    const char* key: the key to search for
+Returns: int - The index of the key in the hash array, or -1 if the key is not found.
+*/
 int ht_find_key(const struct ht* ht, const char* key);
 
-// entry stuff
+/*
+Struct to represent a single entry in a hash table.
 
+Fields:
+    char* key: the key to lookup the entry in the table
+    void* value: the value associated with the key 
+    bool deleted: whether the entry has been deleted
+*/
 struct entry {
     char* key;
-    void* value;
+    char* value;
+    bool deleted;
 };
 
-struct entry* entry_create(const char* key, void* value);
+/*
+Purpose: Creates a new entry with the given key and value.
+Parameters:
+    const char* key: the key to associate with the entry
+    void* value: the value to associate with the entry
+Returns:
+    struct entry* - a pointer to the newly created entry
+*/
+struct entry* entry_create(const char* key, char* value);
 
+/*
+Purpose: Frees the memory associated with an entry.
+Parameters:
+    struct entry* entry: the entry to free
+Returns: Nothing, but frees the memory associated with the entry.
+*/
 void entry_free(struct entry* entry);
 
-// other stuff
+/*
+Purpose: Deletes an entry by freeing the memory associated with it, setting the key and value to empty strings, and setting deleted to true.
+Parameters:
+    struct entry* entry: the entry to delete
+Returns: Nothing, but deletes the entry.
+*/
+void entry_delete(struct entry* entry);
 
+/*
+Purpose: Hashes a string to a 64-bit unsigned integer.
+Parameters: 
+    const char* s: the string to hash
+Returns: uint64_t - the hash of the string
+*/
 uint64_t hash(const char *s);
 
+/*
+Purpose: Determines whether a number is prime.
+Parameters:
+    int num: the number to check
+Returns: bool - true if the number is prime, false otherwise
+*/
 bool is_prime(int num);
 
+/*
+Purpose: Finds the next prime number after a given number.
+Parameters:
+    const int num: the number to find the next prime after
+Returns: int - the next prime number after the given number
+*/
 int next_prime(const int num);
 
 #endif

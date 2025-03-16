@@ -19,25 +19,19 @@ void ht_resize(struct ht* ht)
     int new_capacity = next_prime(ht->capacity * SCALE_FACTOR);
 
     // allocate new array of pointers to entries
-    struct entry** new_array = malloc(new_capacity * sizeof(struct entry*));
+    struct entry** new_array = calloc(new_capacity, sizeof(struct entry*));
     if (new_array == NULL)
     {
         return;
     }
-
-    // initialize each entry to NULL
-    for (int i = 0; i < new_capacity; i++)
-    {
-        new_array[i] = NULL;
-    }
-
+    
     // store all entries in a temporary array
     struct entry* entries[ht->size];
     int entry = 0;
 
     for (int i = 0; i < ht->capacity; i++)
     {
-        if (ht->array[i] != NULL)
+        if (ht->array[i] != NULL && !ht->array[i]->deleted)
         {
             entries[entry++] = ht->array[i];
         }
@@ -60,16 +54,26 @@ void ht_resize(struct ht* ht)
 
 int ht_find_key(const struct ht* ht, const char* key)
 {
+    // start at hash(key) % capacity
     int start = hash(key) % ht->capacity;
 
     for (int i = 0; i < ht->capacity; i++)
     {
+        // loop through each index starting at start
         int index = (start + i) % ht->capacity;
+
+        // if location is empty, key not found
         if (ht->array[index] == NULL)
+        {
+            return -1;
+        }
+        // if location is deleted, continue
+        else if (ht->array[index]->deleted)
         {
             continue;
         }
-        if (strcmp(ht->array[index]->key, key) == 0)
+        // if key matches, return index
+        else if (strcmp(ht->array[index]->key, key) == 0)
         {
             return index;
         }
@@ -78,16 +82,18 @@ int ht_find_key(const struct ht* ht, const char* key)
     return -1;
 }
 
-struct entry* entry_create(const char* key, void* value)
+struct entry* entry_create(const char* key, char* value)
 {
     struct entry* create;
 
+    // allocate memory for entry
     create = malloc(sizeof(struct entry));
     if (create == NULL)
     {
         return NULL;
     }
 
+    // allocate memory for key and copy to entry
     create->key = malloc(strlen(key) + 1);
     if (create->key == NULL)
     {
@@ -96,7 +102,17 @@ struct entry* entry_create(const char* key, void* value)
     }
     strcpy(create->key, key);
 
-    create->value = value;
+    // allocate memory for value and copy to entry
+    create->value = malloc(strlen(value) + 1);
+    if (create->value == NULL)
+    {
+        free(create->key);
+        free(create);
+        return NULL;
+    }
+    strcpy(create->value, value);
+
+    create->deleted = false;
 
     return create;
 }
@@ -108,8 +124,37 @@ void entry_free(struct entry* entry)
         return;
     }
 
-    free(entry->key);
+    // free key if not NULL
+    if (entry->key != NULL)
+    {
+        free(entry->key);
+    }
+
+    // free value if not NULL
+    if (entry->value != NULL)
+    {
+        free(entry->value);
+    }
+
     free(entry);
+}
+
+void entry_delete(struct entry* entry)
+{
+    if (entry == NULL)
+    {
+        return;
+    }
+
+    // free key and set pointer to NULL
+    free(entry->key);
+    entry->key = NULL;
+
+    // free value and set pointer to NULL
+    free(entry->value);
+    entry->value = NULL;
+
+    entry->deleted = true;
 }
 
 uint64_t hash(const char *s)

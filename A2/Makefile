@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -g
 
-all: pcode
+all: pcode testing
 
 pcode: pcode.c ht.o ht_impl.o 
 	$(CC) $(CFLAGS) -o pcode pcode.c ht.o ht_impl.o
@@ -14,12 +14,13 @@ ht_impl.o: ht_impl.c ht.h
 
 # TESTING RULES
 
-testing: compileTests testPrime testEntry testInsertDelete
+testing: compileTests testPrime testEntry testInsertDelete testDist
 
 compileTests: ht_impl.o ht.o
 	$(CC) $(CFLAGS) -o testing/testPrime ht.o ht_impl.o testing/testPrime.c 
 	$(CC) $(CFLAGS) -o testing/testEntry ht.o ht_impl.o  testing/testEntry.c
 	$(CC) $(CFLAGS) -o testing/testInsertDelete ht.o ht_impl.o testing/testInsertDelete.c
+	$(CC) $(CFLAGS) -o testing/testDist ht.o ht_impl.o testing/testDist.c
 
 testPrime: compileTests
 	./testing/testPrime > testing/testPrimeOut
@@ -33,7 +34,12 @@ testInsertDelete: compileTests
 	./testing/testInsertDelete > testing/testInsertDeleteOut
 	diff testing/testInsertDeleteOut testing/correctInsertDelete
 
+testDist: compileTests
+	./testing/testDist > testing/testDistOut
+
+# diff testing/testDistOut testing/correctDist
+
 # GENERAL RULES
 
 clean:
-	rm *.o pcode testing/*Out testing/testPrime testing/testEntry
+	rm *.o pcode testing/*Out testing/testPrime testing/testEntry testing/testInsertDelete testing/testDist
